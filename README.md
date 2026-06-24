@@ -2,11 +2,11 @@
 
 ## Project Overview
 
-This project detects whether a credit card transaction is genuine or fraudulent using machine learning algorithms. Credit card fraud detection is an important real-world application of machine learning because fraudulent transactions are rare but can cause serious financial loss.
+This project detects whether a credit card transaction is genuine or fraudulent using machine learning algorithms. Credit card fraud detection is an important real-world application because fraudulent transactions are rare but can cause serious financial loss.
 
-The system is trained on the Kaggle Credit Card Fraud Detection dataset. It uses transaction features such as `Time`, `Amount`, and anonymized PCA features `V1` to `V28` to classify transactions as genuine or fraudulent.
+The system is trained on the Kaggle Credit Card Fraud Detection dataset. It uses transaction features such as `Time`, `Amount`, and anonymized PCA features `V1` to `V28` to classify each transaction as genuine or fraudulent.
 
-The final trained model is integrated with a Streamlit web application where users can select a transaction from the dataset or manually enter transaction values to get a prediction.
+The trained model is integrated with a Streamlit web application where users can either select a transaction from the dataset or manually enter transaction values to get a prediction.
 
 ---
 
@@ -34,18 +34,44 @@ creditcard.csv
 
 ---
 
+## Dataset Note
+
+The file `creditcard.csv` is not included in this repository because it is larger than the upload limit.
+
+To run this project:
+
+1. Download the dataset from Kaggle.
+2. Extract the downloaded file.
+3. Place `creditcard.csv` in the root folder of this project.
+4. Then run the training file.
+
+Expected local project folder:
+
+```text
+Credit_Card_Fraud_Detection/
+│
+├── creditcard.csv
+├── train_model.py
+├── app.py
+├── README.md
+├── requirements.txt
+└── .gitignore
+```
+
+---
+
 ## Dataset Description
 
 The dataset contains credit card transaction records.
 
 Important columns:
 
-| Column    | Description                         |
-| --------- | ----------------------------------- |
-| Time      | Time elapsed between transactions   |
-| V1 to V28 | Anonymized PCA-transformed features |
-| Amount    | Transaction amount                  |
-| Class     | Target column                       |
+| Column    | Description                                     |
+| --------- | ----------------------------------------------- |
+| Time      | Time elapsed between transactions               |
+| V1 to V28 | Anonymized PCA-transformed transaction features |
+| Amount    | Transaction amount                              |
+| Class     | Target column                                   |
 
 Target column:
 
@@ -54,7 +80,7 @@ Class = 0 → Genuine Transaction
 Class = 1 → Fraudulent Transaction
 ```
 
-Each row in the dataset represents one transaction.
+Each row in the dataset represents one credit card transaction.
 
 The columns `V1` to `V28` are not individual transactions. They are anonymized numerical features generated using PCA to protect sensitive customer and transaction information.
 
@@ -143,28 +169,57 @@ For fraud detection, recall and ROC-AUC are especially important because detecti
 ```text
 Credit_Card_Fraud_Detection/
 │
-├── creditcard.csv
 ├── train_model.py
 ├── app.py
-├── fraud_detection_model.pkl
-└── README.md
+├── README.md
+├── requirements.txt
+└── .gitignore
+```
+
+After downloading the dataset locally, your folder should also contain:
+
+```text
+creditcard.csv
+```
+
+After training the model, this file will be generated:
+
+```text
+fraud_detection_model.pkl
 ```
 
 ---
 
 ## Requirements
 
-Install the required Python libraries using:
+Create a file named `requirements.txt` and add:
+
+```text
+pandas
+numpy
+scikit-learn
+imbalanced-learn
+joblib
+streamlit
+```
+
+Install all required libraries using:
 
 ```bash
-pip install pandas scikit-learn imbalanced-learn joblib streamlit
+pip install -r requirements.txt
 ```
 
 ---
 
 ## How to Run the Project
 
-### Step 1: Download Dataset
+### Step 1: Clone or Download the Project
+
+Download this repository to your local system.
+
+---
+
+### Step 2: Download the Dataset
 
 Download the dataset from Kaggle:
 
@@ -172,13 +227,23 @@ Download the dataset from Kaggle:
 https://www.kaggle.com/datasets/mlg-ulb/creditcardfraud
 ```
 
-Place the file `creditcard.csv` in the project folder.
+After downloading, place `creditcard.csv` in the project root folder.
 
 ---
 
-### Step 2: Train the Model
+### Step 3: Install Requirements
 
-Run the training file:
+Run:
+
+```bash
+pip install -r requirements.txt
+```
+
+---
+
+### Step 4: Train the Model
+
+Run:
 
 ```bash
 python train_model.py
@@ -192,7 +257,7 @@ fraud_detection_model.pkl
 
 ---
 
-### Step 3: Run the Streamlit App
+### Step 5: Run the Streamlit App
 
 After the model is saved, run:
 
@@ -200,7 +265,7 @@ After the model is saved, run:
 streamlit run app.py
 ```
 
-The web app will open in your browser.
+The web application will open in your browser.
 
 ---
 
@@ -309,11 +374,33 @@ Fraud Probability: 91.25%
 
 ---
 
+## Files Not Uploaded
+
+The following files are not uploaded to GitHub because they are either large or generated locally:
+
+```text
+creditcard.csv
+fraud_detection_model.pkl
+```
+
+These files should be ignored using `.gitignore`.
+
+Recommended `.gitignore` content:
+
+```text
+creditcard.csv
+fraud_detection_model.pkl
+__pycache__/
+*.pyc
+```
+
+---
+
 ## Advantages
 
 * Solves a real-world financial security problem
 * Uses supervised machine learning
-* Handles imbalanced data
+* Handles imbalanced data using class weights
 * Compares multiple ML algorithms
 * Uses proper evaluation metrics
 * Provides a simple Streamlit user interface
